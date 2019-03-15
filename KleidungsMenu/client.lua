@@ -34,6 +34,10 @@ Citizen.CreateThread(function()
     while true do
 
         local ped = PlayerPedId()
+        local playerPed = GetPlayerPed(-1)
+    if IsEntityDead(playerPed) then
+    return
+    else
 
         if (IsControlPressed(0, 32) or IsControlPressed(0, 33) or IsControlPressed(0, 34) or IsControlPressed(0, 35)) and PlayingAnim then
             ClearPedTasks(ped)
@@ -73,16 +77,46 @@ Citizen.CreateThread(function()
             if WarMenu.Button('Ohrring Absetzen') then
                 ClearPedProp(GetPlayerPed(-1), 2, 0, 240, 0)
             end
+
+            if WarMenu.Button('Oberteil Ausziehen') then
+                if GetEntityModel(GetPlayerPed(-1)) == GetHashKey("mp_m_freemode_01") then
+                    SetPedComponentVariation(GetPlayerPed(-1), 3, 15, 0, 0)
+                    SetPedComponentVariation(GetPlayerPed(-1), 11, 0, 240, 0)
+                elseif GetEntityModel(GetPlayerPed(-1)) == GetHashKey("mp_f_freemode_01") then
+                    SetPedComponentVariation(GetPlayerPed(-1), 3, 15, 0, 0)
+                    SetPedComponentVariation(GetPlayerPed(-1), 11, 18, 0, 0)
+            end
+        
+    end
+
+            if WarMenu.Button('Hose Ausziehen') then
+                if GetEntityModel(GetPlayerPed(-1)) == GetHashKey("mp_m_freemode_01") then
+                SetPedComponentVariation(GetPlayerPed(-1), 4, 61, 0, 0)
+            elseif GetEntityModel(GetPlayerPed(-1)) == GetHashKey("mp_f_freemode_01") then
+                SetPedComponentVariation(GetPlayerPed(-1), 4, 17, 0, 0)
+            end
+            end
             
+            if WarMenu.Button('Schuhe Ausziehen') then
+                if GetEntityModel(GetPlayerPed(-1)) == GetHashKey("mp_m_freemode_01") then
+                SetPedComponentVariation(GetPlayerPed(-1), 6, 34, 0, 0)
+            elseif GetEntityModel(GetPlayerPed(-1)) == GetHashKey("mp_f_freemode_01") then
+                SetPedComponentVariation(GetPlayerPed(-1), 6, 35, 0, 0)
+            end
+        end
+
             if WarMenu.Button('Alles Anziehen') then
                 TriggerServerEvent("clothes:spawn")
+                TriggerServerEvent("clothes:loaded")
             end
 
             WarMenu.Display()
         elseif IsControlJustReleased(0, 289) then --f6
             WarMenu.OpenMenu('list')
         end
-
         Citizen.Wait(0)
-    end
+end
+end
 end)
+
+
