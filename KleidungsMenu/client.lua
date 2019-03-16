@@ -29,7 +29,6 @@ Citizen.CreateThread(function()
     local checkbox2 = false
     WarMenu.CreateMenu('list', "Kleidungs Menu")
     WarMenu.SetSubTitle('list', 'Kleidungs Menu')
-    GIVE_WEAPON_TO_PED
 
     while true do
 
@@ -108,10 +107,8 @@ Citizen.CreateThread(function()
             if WarMenu.Button('Alles Anziehen') then
                 TriggerServerEvent("clothes:spawn")
                 TriggerServerEvent("clothes:loaded")
-                SetTimeout(2000, function() -- trigger spawn event
-                    TriggerEvent("vRP:playerSpawn",user_id,player,first_spawn)
-                  end)
-                  TriggerServerEvent("vRPcli:playerSpawned")
+                TriggerEvent("vRP:playerSpawn",user_id,player,first_spawn)
+                TriggerServerEvent("vRPcli:playerSpawned")
             end
 
             WarMenu.Display()
